@@ -1,0 +1,293 @@
+﻿1. To design and implement a C++ program that creates and manages a student database using dynamic memory allocation. The program should store each student’s ID, Name, and CGPA, and perform the following operations: 1) Insertion 5 student records 2) Display all stored records. 3) Search an ID using Linear Search algorithm. 
+
+
+#include <iostream>
+using namespace std;
+
+
+struct Student {
+    int id;
+    string name;
+    float cgpa;
+};
+
+
+int main() {
+    int n = 5, key, found = 0;
+    Student *s = new Student[n];
+
+
+    cout << "Enter 5 student records (ID Name CGPA):\n";
+    for(int i=0;i<n;i++)
+        cin >> s[i].id >> s[i].name >> s[i].cgpa;
+
+
+    cout << "\nAll Records:\n";
+    for(int i=0;i<n;i++)
+        cout << s[i].id << " " << s[i].name << " " << s[i].cgpa << endl;
+
+
+    cout << "\nEnter ID to search: ";
+    cin >> key;
+    for(int i=0;i<n;i++)
+        if(s[i].id==key){ cout<<"Found: "<<s[i].name<<" "<<s[i].cgpa; found=1; break; }
+
+
+    if(!found) cout<<"ID not found.";
+    delete[] s;
+}
+
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+
+2. To design and implement a C++ program that creates and manages a student database using dynamic memory allocation. The program should store each student’s ID, Name, and CGPA, and perform the following operations: 1) Insertion 5 Records 2) Display all stored records 3) Search an ID using Binary Search algorithm. 
+
+
+#include <iostream>
+using namespace std;
+
+
+struct Student {
+    int id;
+    string name;
+    float cgpa;
+};
+
+
+int main() {
+    int n=5, key, low=0, high, mid, found=0;
+    Student *s=new Student[n];
+
+
+    cout<<"Enter 5 sorted records (ID Name CGPA):\n";
+    for(int i=0;i<n;i++) cin>>s[i].id>>s[i].name>>s[i].cgpa;
+
+
+    cout<<"Enter ID to search: ";
+    cin>>key; high=n-1;
+
+
+    while(low<=high){
+        mid=(low+high)/2;
+        if(s[mid].id==key){ cout<<"Found: "<<s[mid].name<<" "<<s[mid].cgpa; found=1; break;}
+        else if(s[mid].id<key) low=mid+1;
+        else high=mid-1;
+    }
+    if(!found) cout<<"ID not found.";
+    delete[] s;
+}
+
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+
+3. To design and implement a C++ program that creates and manages a student database using dynamic memory allocation. The program should store each student’s ID, Name, and CGPA, and perform the following operations: (any one sorting) 1) Insertion 5 Records 2) Sort record by ID using Bubble Sort algorithm. 3) Sort record by ID using Insertion Sort algorithm. 
+
+
+#include <iostream>
+using namespace std;
+
+
+struct Student {
+    int id;
+    string name;
+    float cgpa;
+};
+
+
+int main() {
+    int n=5;
+    Student *s=new Student[n];
+
+
+    cout<<"Enter 5 records (ID Name CGPA):\n";
+    for(int i=0;i<n;i++) cin>>s[i].id>>s[i].name>>s[i].cgpa;
+
+
+    for(int i=0;i<n-1;i++)
+        for(int j=0;j<n-i-1;j++)
+            if(s[j].id>s[j+1].id) swap(s[j],s[j+1]);
+
+
+    cout<<"\nSorted by ID:\n";
+    for(int i=0;i<n;i++)
+        cout<<s[i].id<<" "<<s[i].name<<" "<<s[i].cgpa<<endl;
+
+
+    delete[] s;
+}
+
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+
+4. To design and implement a C++ program that creates and manages a student database using dynamic memory allocation. The program should store each student’s ID, Name, and CGPA, and perform the following operations: 1) Insertion 5 Records 2) Sort record by CGPA using Bubble Sort algorithm.
+
+
+#include <iostream>
+using namespace std;
+
+
+struct Student {
+    int id;
+    string name;
+    float cgpa;
+};
+
+
+int main() {
+    int n=5;
+    Student *s=new Student[n];
+
+
+    cout<<"Enter 5 records (ID Name CGPA):\n";
+    for(int i=0;i<n;i++) cin>>s[i].id>>s[i].name>>s[i].cgpa;
+
+
+    for(int i=0;i<n-1;i++)
+        for(int j=0;j<n-i-1;j++)
+            if(s[j].cgpa>s[j+1].cgpa) swap(s[j],s[j+1]);
+
+
+    cout<<"\nSorted by CGPA:\n";
+    for(int i=0;i<n;i++)
+        cout<<s[i].id<<" "<<s[i].name<<" "<<s[i].cgpa<<endl;
+
+
+    delete[] s;
+}
+
+
+—-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+How to remember???
+
+
+#include <iostream>
+using namespace std;
+
+
+struct Student {
+    int id;
+    string name;
+    float cgpa;
+};
+
+
+int main() {
+    int n = 5;
+    Student *s = new Student[n];
+
+
+    // Input
+    for(int i=0;i<n;i++)
+        cin >> s[i].id >> s[i].name >> s[i].cgpa;
+
+
+    // (Different logic here)
+
+
+    delete[] s;
+}
+
+
+
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+📜 SLIP 1 – Linear Search
+What you did:
+“I entered 5 students’ data, displayed all, then searched for a student using their ID by checking one by one.”
+If asked questions:
+* Q: What is Linear Search?
+A: Checking each element one by one until we find the match.
+
+* Q: Time complexity?
+A: O(n)
+
+* Q: Why dynamic memory?
+A: To allocate memory at runtime using new.
+
+Bonus line:
+“It’s the simplest search method but slow for big data.”
+________________
+
+
+🔍 SLIP 2 – Binary Search
+What you did:
+“I entered 5 sorted records and used binary search to find a student ID by dividing the list into halves.”
+Questions:
+   * Q: When can we use binary search?
+A: Only when the list is sorted.
+
+   * Q: Time complexity?
+A: O(log n)
+
+   * Q: Difference between linear and binary search?
+A: Linear = one by one; Binary = divide and search faster.
+
+________________
+
+
+🔢 SLIP 3 – Sort by ID (Bubble Sort)
+What you did:
+“I entered 5 records and sorted them by ID using bubble sort.”
+Questions:
+      * Q: What is bubble sort?
+A: It compares two elements and swaps if they’re in the wrong order.
+
+      * Q: Why called bubble sort?
+A: Biggest element ‘bubbles up’ to the end.
+
+      * Q: Time complexity?
+A: O(n²)
+
+Bonus line:
+“After sorting, IDs appear in ascending order.”
+________________
+
+
+🎯 SLIP 4 – Sort by CGPA (Bubble Sort)
+What you did:
+“I sorted 5 records based on CGPA using bubble sort.”
+Questions:
+         * Q: What changes compared to ID sort?
+A: Only the comparison — I used cgpa instead of id.
+
+         * Q: Why sorting helps?
+A: To easily see the topper or lowest CGPA.
+
+         * Q: Algorithm used?
+A: Bubble sort again.
+
+________________
+
+
+💬 Common Quick Answers (say confidently)
+Question
+	Easy Answer
+	What is struct?
+	A group of variables of different types.
+	What is new?
+	It allocates memory at runtime.
+	What is delete[]?
+	It frees the allocated memory.
+	What is cin and cout?
+	cin for input, cout for output.
+	What is the use of dynamic memory?
+	We can decide memory size while running the program.
