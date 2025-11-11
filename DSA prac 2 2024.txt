@@ -1,0 +1,373 @@
+5. To design and implement a C++ program that represents a Stack as an Abstract Data Type (ADT) using a singly linked list. The program should perform the following operations: 1) To convert an infix expression into its equivalent postfix expression. 
+
+#include <iostream>
+#include <cctype>
+using namespace std;
+
+struct Node { char data; Node* next; };
+Node* top=NULL;
+
+void push(char x){ Node* t=new Node; t->data=x; t->next=top; top=t; }
+char pop(){ if(!top) return '\0'; char x=top->data; top=top->next; return x; }
+char peek(){ return top?top->data:'\0'; }
+int prec(char c){ if(c=='+'||c=='-') return 1; if(c=='*'||c=='/') return 2; return 0; }
+
+int main(){
+    string in, post=""; cout<<"Enter infix: "; cin>>in;
+    for(char c:in){
+        if(isalnum(c)) post+=c;
+        else if(c=='(') push(c);
+        else if(c==')'){ while(peek()!='(') post+=pop(); pop(); }
+        else{ while(top && prec(peek())>=prec(c)) post+=pop(); push(c); }
+    }
+    while(top) post+=pop();
+    cout<<"Postfix: "<<post;
+}
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+6. To design and implement a C++ program that represents a Stack as an Abstract Data Type (ADT) using a singly linked list. The program should perform the following operations: 1) To convert an infix expression into its equivalent prefix expression.
+
+#include <iostream>
+#include <cctype>
+using namespace std;
+
+struct Node { char data; Node* next; };
+Node* top=NULL;
+
+void push(char x){ Node* t=new Node; t->data=x; t->next=top; top=t; }
+char pop(){ if(!top) return '\0'; char x=top->data; top=top->next; return x; }
+char peek(){ return top?top->data:'\0'; }
+int prec(char c){ if(c=='+'||c=='-') return 1; if(c=='*'||c=='/') return 2; return 0; }
+
+int main(){
+    string in, post=""; cout<<"Enter infix: "; cin>>in;
+    for(char c:in){
+        if(isalnum(c)) post+=c;
+        else if(c=='(') push(c);
+        else if(c==')'){ while(peek()!='(') post+=pop(); pop(); }
+        else{ while(top && prec(peek())>=prec(c)) post+=pop(); push(c); }
+    }
+    while(top) post+=pop();
+    cout<<"Postfix: "<<post;
+}
+
+—----------------------------------------------------------------------------------------------------------------------------
+7. To design and implement a C++ program to represent a Circular Queue using an array and perform the following operations: 1) Insert (enqueue) elements into the queue. 2) Delete (dequeue) elements from the queue 3) Display all elements of the queue
+
+#include <iostream>
+using namespace std;
+#define SIZE 5
+
+int q[SIZE], front=-1, rear=-1;
+
+void enqueue(int x){
+    if((rear+1)%SIZE==front) cout<<"Full\n";
+    else{
+        if(front==-1) front=0;
+        rear=(rear+1)%SIZE;
+        q[rear]=x;
+    }
+}
+
+void dequeue(){
+    if(front==-1) cout<<"Empty\n";
+    else{
+        cout<<"Deleted: "<<q[front]<<endl;
+        if(front==rear) front=rear=-1;
+        else front=(front+1)%SIZE;
+    }
+}
+
+void display(){
+    if(front==-1) cout<<"Empty\n";
+    else{
+        cout<<"Queue: ";
+        for(int i=front;;i=(i+1)%SIZE){
+            cout<<q[i]<<" ";
+            if(i==rear) break;
+        }
+        cout<<endl;
+    }
+}
+
+int main(){
+    enqueue(10); enqueue(20); enqueue(30);
+    display();
+    dequeue();
+    display();
+}
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+8. To design and implement a Python program to create and represent a Binary Search Tree (BST) and perform the following operations: (insert and any one display) 1) Insert 8 nodes into the BST 2) Display the tree using In-Order Traversal 3) Display the tree using Pre-Order Traversal 4) Display the tree using Post-Order Traversal 
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = self.right = None
+
+def insert(root, key):
+    if root is None:
+        return Node(key)
+    if key < root.data:
+        root.left = insert(root.left, key)
+    else:
+        root.right = insert(root.right, key)
+    return root
+
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.data, end=" ")
+        inorder(root.right)
+
+# Main
+root = None
+nodes = [50, 30, 70, 20, 40, 60, 80, 10]  # 8 nodes
+for n in nodes:
+    root = insert(root, n)
+
+print("Inorder Traversal:")
+inorder(root)
+For Preorder
+def preorder(root):
+    if root:
+        print(root.data, end=" ")
+        preorder(root.left)
+        preorder(root.right)
+
+For Postorder
+def postorder(root):
+    if root:
+        postorder(root.left)
+        postorder(root.right)
+        print(root.data, end=" ")
+
+—----------------------------------------------------------------------------------------------------------------------------
+9. To design and implement a Python program to create and represent a Binary Search Tree (BST) and perform the following operations (insert and any one display): 1) Insert 8 nodes into the BST 4) Display all parent nodes 2) Display all child nodes 3) Display Tree Level
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = self.right = None
+
+def insert(root, key):
+    if not root:
+        return Node(key)
+    if key < root.data:
+        root.left = insert(root.left, key)
+    else:
+        root.right = insert(root.right, key)
+    return root
+
+def show_parents(root):
+    if root:
+        if root.left or root.right:
+            print(root.data, end=" ")
+        show_parents(root.left)
+        show_parents(root.right)
+
+# Main
+root = None
+nodes = [50, 30, 70, 20, 40, 60, 80, 10]  # 8 nodes
+for n in nodes:
+    root = insert(root, n)
+
+print("Parent Nodes:")
+show_parents(root)
+
+—----------------------------------------------------------------------------------------------------------------------------
+10. To design and implement a Python program to create and represent a Graph using an adjacency list and perform following operations: (any one display) 1) Insert vertices and edges into the graph. 2) Display the graph structure using the adjacency list representation. 3) Display the graph using the adjacency matrix representation. 
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_vertex(self, v):
+        if v not in self.graph:
+            self.graph[v] = []
+
+    def add_edge(self, u, v):
+        self.add_vertex(u)
+        self.add_vertex(v)
+        self.graph[u].append(v)
+        self.graph[v].append(u)  # for undirected graph
+
+    def show_list(self):
+        for v in self.graph:
+            print(v, "->", self.graph[v])
+
+    def show_matrix(self):
+        verts = list(self.graph.keys())
+        print("  ", *verts)
+        for i in verts:
+            row = [1 if j in self.graph[i] else 0 for j in verts]
+            print(i, *row)
+
+# --- Main ---
+g = Graph()
+edges = [(1,2),(1,3),(2,4),(3,4),(4,5)]
+for u,v in edges:
+    g.add_edge(u,v)
+
+print("Adjacency List:")
+g.show_list()
+
+print("\nAdjacency Matrix:")
+g.show_matrix()
+
+—----------------------------------------------------------------------------------------------------------------------------
+11. To design and implement a Python program to create and represent a Graph and perform following operations: 1) Insert vertices and edges into the graph 2) Find the Minimum Spanning Tree using Kruskal’s algorithm.
+
+class Graph:
+    def __init__(self, v):
+        self.V = v
+        self.edges = []
+
+    def add(self, u, v, w):
+        self.edges.append([u, v, w])
+
+    def find(self, p, i):
+        if p[i] == i: return i
+        p[i] = self.find(p, p[i])
+        return p[i]
+
+    def union(self, p, x, y):
+        p[self.find(p, y)] = self.find(p, x)
+
+    def kruskal(self):
+        self.edges.sort(key=lambda x: x[2])
+        p = [i for i in range(self.V)]
+        mst = []
+        for u, v, w in self.edges:
+            x, y = self.find(p, u), self.find(p, v)
+            if x != y:
+                mst.append((u, v, w))
+                self.union(p, x, y)
+        print("MST Edges:")
+        for u, v, w in mst:
+            print(u, "-", v, "=", w)
+
+# --- Main ---
+g = Graph(5)
+g.add(0,1,2); g.add(0,3,6); g.add(1,2,3)
+g.add(1,3,8); g.add(1,4,5); g.add(2,4,7)
+g.kruskal()
+—----------------------------------------------------------------------------------------------------------------------------
+12. To design and implement a Python program to create and represent a Graph and perform following operations: 5) Insert vertices and edges into the graph 6) Find the Minimum Spanning Tree using Prim’s algorithms.
+
+import sys
+
+class Graph:
+    def __init__(self, v):
+        self.V = v
+        self.graph = [[0]*v for _ in range(v)]
+
+    def add_edge(self, u, v, w):
+        self.graph[u][v] = w
+        self.graph[v][u] = w  # undirected
+
+    def prims(self):
+        key = [sys.maxsize]*self.V
+        key[0] = 0
+        mst = [False]*self.V
+        parent = [-1]*self.V
+
+        for _ in range(self.V):
+            u = min((key[v], v) for v in range(self.V) if not mst[v])[1]
+            mst[u] = True
+            for v in range(self.V):
+                if 0 < self.graph[u][v] < key[v] and not mst[v]:
+                    key[v] = self.graph[u][v]
+                    parent[v] = u
+
+        print("Edges in MST:")
+        for i in range(1, self.V):
+            print(parent[i], "-", i, "=", self.graph[i][parent[i]])
+
+# --- Main ---
+g = Graph(5)
+g.add_edge(0,1,2); g.add_edge(0,3,6)
+g.add_edge(1,2,3); g.add_edge(1,3,8); g.add_edge(1,4,5); g.add_edge(2,4,7)
+g.prims()
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+13. To design and implement a Python program to perform Heap Sort for sorting an array of integers in ascending order.
+def heapify(arr, n, i):
+    largest = i
+    l, r = 2*i+1, 2*i+2
+    if l < n and arr[l] > arr[largest]: largest = l
+    if r < n and arr[r] > arr[largest]: largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heapSort(arr):
+    n = len(arr)
+    for i in range(n//2-1, -1, -1): heapify(arr, n, i)
+    for i in range(n-1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+
+arr = [12, 11, 13, 5, 6, 7]
+heapSort(arr)
+print("Sorted array:", arr)
+
+—----------------------------------------------------------------------------------------------------------------------------
+14. To design and implement a Python program to perform Merge Sort sorting a list of online orders on their delivery time in ascending order
+
+def mergeSort(arr):
+    if len(arr) > 1:
+        mid = len(arr)//2
+        L = arr[:mid]; R = arr[mid:]
+        mergeSort(L); mergeSort(R)
+        i=j=k=0
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]: arr[k]=L[i]; i+=1
+            else: arr[k]=R[j]; j+=1
+            k+=1
+        arr[k:] = L[i:] + R[j:]
+
+orders = [5, 2, 9, 1, 6, 3]
+mergeSort(orders)
+print("Sorted Delivery Times:", orders)
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+15. To design and implement a Python program to solve the Fractional Knapsack problem using the Greedy approach in order to maximize total profit. 
+def fractionalKnapsack(value, weight, capacity):
+    ratio = [(v/w, v, w) for v, w in zip(value, weight)]
+    ratio.sort(reverse=True)
+    total = 0
+    for r, v, w in ratio:
+        if capacity >= w:
+            total += v
+            capacity -= w
+        else:
+            total += r * capacity
+            break
+    return total
+
+value = [60, 100, 120]
+weight = [10, 20, 30]
+cap = 50
+print("Maximum Profit:", fractionalKnapsack(value, weight, cap))
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+16. To design and implement a Python program to perform Naive String Matching in order to f ind and display all occurrences of a given pattern within a text.
+
+def naiveSearch(text, pattern):
+    n, m = len(text), len(pattern)
+    for i in range(n - m + 1):
+        if text[i:i+m] == pattern:
+            print("Pattern found at index", i)
+
+text = "AABAACAADAABAABA"
+pattern = "AABA"
+naiveSearch(text, pattern)
+
+—----------------------------------------------------------------------------------------------------------------------------
+
